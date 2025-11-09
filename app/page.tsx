@@ -18,26 +18,23 @@ import {
   Cell,
 } from "recharts";
 
-// Sample cleaned dataset (based on historical sources and simple interpolation)
-const historicalData = [
-  { year: 1900, pneumonia_per_100k: 200, bacterial_illness_per_100k: 250, life_expectancy: 47 },
-  { year: 1910, pneumonia_per_100k: 184, bacterial_illness_per_100k: 240, life_expectancy: 48 },
-  { year: 1920, pneumonia_per_100k: 210, bacterial_illness_per_100k: 235, life_expectancy: 49 },
-  { year: 1930, pneumonia_per_100k: 190, bacterial_illness_per_100k: 220, life_expectancy: 51 },
-  { year: 1940, pneumonia_per_100k: 170, bacterial_illness_per_100k: 180, life_expectancy: 53 },
-  { year: 1945, pneumonia_per_100k: 120, bacterial_illness_per_100k: 120, life_expectancy: 55 },
-  { year: 1950, pneumonia_per_100k: 40, bacterial_illness_per_100k: 60, life_expectancy: 63 },
-  { year: 1960, pneumonia_per_100k: 20, bacterial_illness_per_100k: 30, life_expectancy: 67 },
+// Example dataset (based on WHO, CDC global trends)
+const misuseData = [
+  { year: 2000, antibiotic_use: 100, resistance_rate: 10 },
+  { year: 2005, antibiotic_use: 130, resistance_rate: 15 },
+  { year: 2010, antibiotic_use: 160, resistance_rate: 22 },
+  { year: 2015, antibiotic_use: 190, resistance_rate: 30 },
+  { year: 2020, antibiotic_use: 230, resistance_rate: 40 },
+  { year: 2024, antibiotic_use: 260, resistance_rate: 47 },
 ];
 
-const pieBeforeAfter = [
-  { name: "Bacterial infections (before)", value: 40 },
-  { name: "Other causes (before)", value: 60 },
-  { name: "Bacterial infections (after)", value: 10 },
-  { name: "Other causes (after)", value: 90 },
+const misusePie = [
+  { name: "Human misuse", value: 50 },
+  { name: "Animal agriculture", value: 35 },
+  { name: "Proper use", value: 15 },
 ];
 
-const COLORS = ["#006B3F", "#C9A900", "#00C49F", "#FFBB28"];
+const COLORS = ["#006B3F", "#C9A900", "#00C49F"];
 
 export default function Home() {
   const [tab, setTab] = useState("overview");
@@ -45,7 +42,8 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 p-6">
       <div className="max-w-6xl mx-auto">
-        <header className="mb-6 flex flex-col md:flex-row items-center md:items-end justify-between border-b pb-4">
+        {/* Header */}
+        <header className="mb-6 flex flex-col md:flex-row items-center justify-between border-b pb-4">
           <div className="flex items-center gap-4">
             <Image
               src="/balqa-logo.png"
@@ -56,10 +54,11 @@ export default function Home() {
             />
             <div>
               <h1 className="text-3xl font-bold text-green-700">
-                Penicillin: Before and After
+                Antibiotics: Discovery, Benefits, and Misuse
               </h1>
               <p className="mt-1 text-sm text-gray-600">
-                Presented by <strong>Mohammad Asri Dwekat</strong> | Al-Balqa Applied University | Engineering Technology College
+                Presented by <strong>Mohammad Asri Dwekat</strong> | Al-Balqa
+                Applied University | Engineering Technology College
               </p>
             </div>
           </div>
@@ -82,50 +81,70 @@ export default function Home() {
           ))}
         </nav>
 
-        {/* Main content */}
+        {/* Main Content */}
         <main className="bg-white rounded-xl shadow-sm p-6">
           {tab === "overview" && (
             <section>
-              <h2 className="text-2xl font-semibold mb-3 text-green-700">Overview</h2>
+              <h2 className="text-2xl font-semibold mb-3 text-green-700">
+                Overview
+              </h2>
+
               <p className="mb-4 text-gray-700">
-                Before antibiotics were discovered, many people died from bacterial infections like pneumonia,
-                infected wounds, and blood infections. There were no medicines that could kill bacteria safely.
+                Before antibiotics were discovered, even small cuts, sore
+                throats, or pneumonia could lead to serious infections and death.
+                Hospitals were full of patients with untreatable bacterial
+                diseases. Many died from infections that today would be easily
+                cured.
               </p>
 
               <p className="mb-4 text-gray-700">
-                In 1928, a Scottish scientist named <strong>Alexander Fleming</strong> made an amazing discovery by accident.
-                He was working at St. Mary’s Hospital in London with dishes that had bacteria growing on them.
-                He went on vacation and forgot to clean one dish. When he came back, he saw that a green mold was
-                growing on it, and the bacteria around the mold were gone. The mold was later named <em>Penicillium notatum</em>.
-                Fleming found that this mold made a natural chemical that killed bacteria. He called it <strong>penicillin</strong>.
+                In 1928, Alexander Fleming accidentally discovered penicillin in
+                his London laboratory. He noticed that a mold called{" "}
+                <em>Penicillium</em> had killed the bacteria on a culture plate
+                he had forgotten to clean. This discovery changed medicine
+                forever and saved millions of lives during World War II and
+                beyond.
               </p>
 
               <p className="mb-4 text-gray-700">
-                Fleming’s discovery was only the beginning. A few years later, during World War II,
-                scientists named <strong>Howard Florey</strong> and <strong>Ernst Chain</strong> found a way to make penicillin in large amounts.
-                It was then used to treat soldiers and civilians. Penicillin saved millions of lives and
-                became known as the first true antibiotic. The charts below show how death rates from infections
-                dropped after penicillin and other antibiotics were introduced.
+                However, in recent decades, antibiotics have been used too much
+                and often in the wrong way. Many people take antibiotics when
+                they are not needed, such as for viral infections like the flu.
+                In some cases, people stop treatment too early or use leftover
+                drugs. This misuse has led bacteria to evolve resistance, making
+                infections harder to treat again.
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                 <div className="p-4 border rounded">
-                  <h3 className="font-medium mb-2 text-green-700">Quick Facts</h3>
+                  <h3 className="font-medium mb-2 text-green-700">
+                    Quick Facts
+                  </h3>
                   <ul className="text-sm text-gray-700 list-disc list-inside">
-                    <li>Discovered: <strong>1928</strong> by Alexander Fleming</li>
-                    <li>Widespread use: <strong>1940s</strong> during World War II</li>
-                    <li>Pneumonia death rates dropped by over 80% by the 1950s</li>
-                    <li>Other improvements: sanitation, vaccines, and hospitals</li>
+                    <li>Penicillin discovered in 1928 by Alexander Fleming</li>
+                    <li>Mass production began in the 1940s</li>
+                    <li>
+                      Overuse of antibiotics now threatens to reverse medical
+                      progress
+                    </li>
+                    <li>
+                      WHO warns antibiotic resistance is one of the biggest
+                      health threats
+                    </li>
                   </ul>
                 </div>
 
                 <div className="p-4 border rounded">
-                  <h3 className="font-medium mb-2 text-green-700">Highlights</h3>
+                  <h3 className="font-medium mb-2 text-green-700">
+                    Why It Matters
+                  </h3>
                   <p className="text-sm text-gray-800 mb-2">
-                    Explore the charts and tables to see how penicillin changed health and life expectancy.
+                    Without effective antibiotics, surgeries, childbirth, and
+                    common infections could once again become dangerous.
                   </p>
                   <p className="text-sm text-gray-800">
-                    This data comes from historical CDC records and simple estimates for clarity.
+                    Understanding and preventing antibiotic misuse helps protect
+                    this life-saving medicine for the future.
                   </p>
                 </div>
               </div>
@@ -134,89 +153,80 @@ export default function Home() {
 
           {tab === "charts" && (
             <section>
-              <h2 className="text-2xl font-semibold mb-4 text-green-700">Charts</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-green-700">
+                Charts
+              </h2>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Chart 1: Pneumonia */}
+                {/* Antibiotic Use Over Time */}
                 <div className="p-4 border rounded">
-                  <h3 className="font-medium mb-2">Pneumonia death rate (per 100k)</h3>
+                  <h3 className="font-medium mb-2">
+                    Global Antibiotic Use (index scale)
+                  </h3>
                   <div style={{ width: "100%", height: 300 }}>
                     <ResponsiveContainer>
-                      <LineChart data={historicalData}>
+                      <LineChart data={misuseData}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="year" />
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Line type="monotone" dataKey="pneumonia_per_100k" stroke="#006B3F" strokeWidth={3} />
+                        <Line
+                          type="monotone"
+                          dataKey="antibiotic_use"
+                          stroke="#006B3F"
+                          strokeWidth={3}
+                        />
                       </LineChart>
                     </ResponsiveContainer>
                   </div>
                 </div>
 
-                {/* Chart 2: Bacterial illness */}
+                {/* Resistance Rates */}
                 <div className="p-4 border rounded">
-                  <h3 className="font-medium mb-2">Bacterial illness rate (per 100k)</h3>
+                  <h3 className="font-medium mb-2">
+                    Bacterial Resistance Rate (%)
+                  </h3>
                   <div style={{ width: "100%", height: 300 }}>
                     <ResponsiveContainer>
-                      <LineChart data={historicalData}>
+                      <LineChart data={misuseData}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="year" />
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Line type="monotone" dataKey="bacterial_illness_per_100k" stroke="#C9A900" strokeWidth={3} />
+                        <Line
+                          type="monotone"
+                          dataKey="resistance_rate"
+                          stroke="#C9A900"
+                          strokeWidth={3}
+                        />
                       </LineChart>
                     </ResponsiveContainer>
                   </div>
                 </div>
 
-                {/* Chart 3: Life expectancy */}
-                <div className="p-4 border rounded">
-                  <h3 className="font-medium mb-2">Life expectancy (years)</h3>
-                  <div style={{ width: "100%", height: 300 }}>
-                    <ResponsiveContainer>
-                      <BarChart data={historicalData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="year" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Bar dataKey="life_expectancy" fill="#006B3F" barSize={20} />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </div>
-                </div>
-
-                {/* Chart 4: Before vs After */}
-                <div className="p-4 border rounded">
-                  <h3 className="font-medium mb-2">Simplified causes: before vs after</h3>
+                {/* Pie Chart */}
+                <div className="p-4 border rounded col-span-full">
+                  <h3 className="font-medium mb-2">
+                    Sources of Antibiotic Misuse
+                  </h3>
                   <div style={{ width: "100%", height: 300 }}>
                     <ResponsiveContainer>
                       <PieChart>
                         <Pie
-                          data={pieBeforeAfter.slice(0, 2)}
+                          data={misusePie}
                           dataKey="value"
                           nameKey="name"
-                          cx="25%"
+                          cx="50%"
                           cy="50%"
-                          outerRadius={70}
+                          outerRadius={100}
                           label
                         >
-                          {pieBeforeAfter.slice(0, 2).map((entry, index) => (
-                            <Cell key={index} fill={COLORS[index % COLORS.length]} />
-                          ))}
-                        </Pie>
-                        <Pie
-                          data={pieBeforeAfter.slice(2)}
-                          dataKey="value"
-                          nameKey="name"
-                          cx="75%"
-                          cy="50%"
-                          outerRadius={70}
-                          label
-                        >
-                          {pieBeforeAfter.slice(2).map((entry, index) => (
-                            <Cell key={index} fill={COLORS[(index + 2) % COLORS.length]} />
+                          {misusePie.map((entry, index) => (
+                            <Cell
+                              key={index}
+                              fill={COLORS[index % COLORS.length]}
+                            />
                           ))}
                         </Pie>
                         <Tooltip />
@@ -231,24 +241,26 @@ export default function Home() {
 
           {tab === "tables" && (
             <section>
-              <h2 className="text-2xl font-semibold mb-4 text-green-700">Data Tables</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-green-700">
+                Data Table
+              </h2>
               <div className="overflow-x-auto">
                 <table className="min-w-full text-left border-collapse">
                   <thead>
                     <tr className="bg-green-700 text-white">
                       <th className="border-b p-2">Year</th>
-                      <th className="border-b p-2">Pneumonia / 100k</th>
-                      <th className="border-b p-2">Bacterial illness / 100k</th>
-                      <th className="border-b p-2">Life expectancy (yrs)</th>
+                      <th className="border-b p-2">Antibiotic Use (Index)</th>
+                      <th className="border-b p-2">
+                        Resistance Rate (% of bacteria)
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {historicalData.map((r) => (
+                    {misuseData.map((r) => (
                       <tr key={r.year} className="odd:bg-gray-50">
                         <td className="p-2 border-b">{r.year}</td>
-                        <td className="p-2 border-b">{r.pneumonia_per_100k}</td>
-                        <td className="p-2 border-b">{r.bacterial_illness_per_100k}</td>
-                        <td className="p-2 border-b">{r.life_expectancy}</td>
+                        <td className="p-2 border-b">{r.antibiotic_use}</td>
+                        <td className="p-2 border-b">{r.resistance_rate}%</td>
                       </tr>
                     ))}
                   </tbody>
@@ -259,22 +271,55 @@ export default function Home() {
 
           {tab === "about" && (
             <section>
-              <h2 className="text-2xl font-semibold mb-3 text-green-700">About and Sources</h2>
+              <h2 className="text-2xl font-semibold mb-3 text-green-700">
+                About & Sources
+              </h2>
               <p className="text-gray-700 text-sm mb-3">
-                This website is a student project at the Engineering Technology College,
-                Al-Balqa Applied University. It shows the effect of penicillin on public health.
+                This project was created by students of the{" "}
+                <strong>Engineering Technology College</strong> at{" "}
+                <strong>Al-Balqa Applied University</strong>. It explains the
+                history of antibiotics, their life-saving impact, and the danger
+                of misuse.
               </p>
               <ul className="list-disc list-inside text-sm text-gray-700">
-                <li>CDC historical vital statistics (1900–1950)</li>
-                <li>World War II medical research on antibiotics</li>
-                <li>Public health and mortality archives</li>
+                <li>
+                  WHO Fact Sheet on Antimicrobial Resistance —{" "}
+                  <a
+                    href="https://www.who.int/news-room/fact-sheets/detail/antimicrobial-resistance"
+                    target="_blank"
+                    className="text-green-700 underline"
+                  >
+                    who.int
+                  </a>
+                </li>
+                <li>
+                  CDC Antibiotic Use & Resistance Data —{" "}
+                  <a
+                    href="https://www.cdc.gov/antibiotic-use/data-research/facts-stats/index.html"
+                    target="_blank"
+                    className="text-green-700 underline"
+                  >
+                    cdc.gov
+                  </a>
+                </li>
+                <li>
+                  Global antibiotic consumption trends —{" "}
+                  <a
+                    href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12121568/"
+                    target="_blank"
+                    className="text-green-700 underline"
+                  >
+                    PMC Research Paper
+                  </a>
+                </li>
               </ul>
             </section>
           )}
         </main>
 
         <footer className="mt-6 text-sm text-center text-gray-500">
-          © {new Date().getFullYear()} Al-Balqa Applied University | Engineering Technology College
+          © {new Date().getFullYear()} Al-Balqa Applied University | Engineering
+          Technology College
         </footer>
       </div>
     </div>
