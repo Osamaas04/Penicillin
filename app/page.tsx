@@ -19,6 +19,8 @@ import {
 } from "recharts";
 
 // Example dataset (based on WHO, CDC global trends)
+// antibiotic_use is an index with 2000 = 100 (shows relative change)
+// resistance_rate is percent of sampled bacteria showing resistance
 const misuseData = [
   { year: 2000, antibiotic_use: 100, resistance_rate: 10 },
   { year: 2005, antibiotic_use: 130, resistance_rate: 15 },
@@ -54,11 +56,11 @@ export default function Home() {
             />
             <div>
               <h1 className="text-3xl font-bold text-green-700">
-                Antibiotics: Discovery, Benefits, and Misuse
+                Antibiotics: Discovery, Benefits, Misuse, and Solutions
               </h1>
               <p className="mt-1 text-sm text-gray-600">
-                Presented by <strong>Mohammad Asri Dwekat</strong> | Al-Balqa
-                Applied University | Engineering Technology College
+                Presented by <strong>Mohammad Asri Dwekat</strong> — Al-Balqa
+                Applied University, Engineering Technology College
               </p>
             </div>
           </div>
@@ -66,7 +68,7 @@ export default function Home() {
 
         {/* Navigation Tabs */}
         <nav className="flex gap-2 mb-6">
-          {["overview", "charts", "tables", "about"].map((t) => (
+          {["overview", "charts", "tables", "solutions", "about"].map((t) => (
             <button
               key={t}
               onClick={() => setTab(t)}
@@ -90,29 +92,28 @@ export default function Home() {
               </h2>
 
               <p className="mb-4 text-gray-700">
-                Before antibiotics were discovered, even small cuts, sore
-                throats, or pneumonia could lead to serious infections and death.
-                Hospitals were full of patients with untreatable bacterial
-                diseases. Many died from infections that today would be easily
-                cured.
+                Before antibiotics were discovered, small cuts, sore throats, or
+                pneumonia could lead to severe infections and death. Hospitals
+                could only support patients while their body fought the
+                infection. Many common procedures were risky because infections
+                could not be treated.
               </p>
 
               <p className="mb-4 text-gray-700">
-                In 1928, Alexander Fleming accidentally discovered penicillin in
-                his London laboratory. He noticed that a mold called{" "}
-                <em>Penicillium</em> had killed the bacteria on a culture plate
-                he had forgotten to clean. This discovery changed medicine
-                forever and saved millions of lives during World War II and
-                beyond.
+                In 1928, Alexander Fleming discovered penicillin by accident.
+                He noticed a mold on a culture plate that had killed nearby
+                bacteria. Later work by other scientists made penicillin into a
+                medicine that could be produced and used widely. Antibiotics
+                saved millions of lives.
               </p>
 
               <p className="mb-4 text-gray-700">
-                However, in recent decades, antibiotics have been used too much
-                and often in the wrong way. Many people take antibiotics when
-                they are not needed, such as for viral infections like the flu.
-                In some cases, people stop treatment too early or use leftover
-                drugs. This misuse has led bacteria to evolve resistance, making
-                infections harder to treat again.
+                Over time, antibiotics were used more and often in the wrong way.
+                People take antibiotics for viral infections, stop treatment too
+                early, or use leftover drugs. Farmers sometimes use antibiotics
+                to make animals grow faster. These practices let bacteria
+                develop resistance. Resistant infections are harder to treat and
+                cause many deaths worldwide.
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
@@ -123,14 +124,8 @@ export default function Home() {
                   <ul className="text-sm text-gray-700 list-disc list-inside">
                     <li>Penicillin discovered in 1928 by Alexander Fleming</li>
                     <li>Mass production began in the 1940s</li>
-                    <li>
-                      Overuse of antibiotics now threatens to reverse medical
-                      progress
-                    </li>
-                    <li>
-                      WHO warns antibiotic resistance is one of the biggest
-                      health threats
-                    </li>
+                    <li>Overuse of antibiotics now reduces their effectiveness</li>
+                    <li>WHO lists antibiotic resistance as a top health threat</li>
                   </ul>
                 </div>
 
@@ -140,11 +135,10 @@ export default function Home() {
                   </h3>
                   <p className="text-sm text-gray-800 mb-2">
                     Without effective antibiotics, surgeries, childbirth, and
-                    common infections could once again become dangerous.
+                    common infections could become dangerous again.
                   </p>
                   <p className="text-sm text-gray-800">
-                    Understanding and preventing antibiotic misuse helps protect
-                    this life-saving medicine for the future.
+                    Reducing misuse protects antibiotics for future patients.
                   </p>
                 </div>
               </div>
@@ -162,6 +156,15 @@ export default function Home() {
                   <h3 className="font-medium mb-2">
                     Global Antibiotic Use (index scale)
                   </h3>
+                  <p className="text-sm text-gray-700 mb-2">
+                    The index sets the year 2000 equal to 100. A value of 260
+                    means 2.6 times the baseline use in 2000.
+                  </p>
+                  <div className="mb-3 p-3 bg-gray-50 border rounded text-sm text-gray-700">
+                    Index explanation: the numbers are relative. 2000 = 100. If
+                    2024 = 260, global antibiotic use is about 2.6 times higher
+                    than in 2000. This makes it easier to show change over time.
+                  </div>
                   <div style={{ width: "100%", height: 300 }}>
                     <ResponsiveContainer>
                       <LineChart data={misuseData}>
@@ -183,9 +186,11 @@ export default function Home() {
 
                 {/* Resistance Rates */}
                 <div className="p-4 border rounded">
-                  <h3 className="font-medium mb-2">
-                    Bacterial Resistance Rate (%)
-                  </h3>
+                  <h3 className="font-medium mb-2">Bacterial Resistance Rate (%)</h3>
+                  <p className="text-sm text-gray-700 mb-2">
+                    This shows the share of bacteria samples that are resistant.
+                    Higher percent means more resistance in samples.
+                  </p>
                   <div style={{ width: "100%", height: 300 }}>
                     <ResponsiveContainer>
                       <LineChart data={misuseData}>
@@ -207,9 +212,10 @@ export default function Home() {
 
                 {/* Pie Chart */}
                 <div className="p-4 border rounded col-span-full">
-                  <h3 className="font-medium mb-2">
-                    Sources of Antibiotic Misuse
-                  </h3>
+                  <h3 className="font-medium mb-2">Sources of Antibiotic Misuse</h3>
+                  <p className="text-sm text-gray-700 mb-2">
+                    This chart shows common drivers of misuse worldwide.
+                  </p>
                   <div style={{ width: "100%", height: 300 }}>
                     <ResponsiveContainer>
                       <PieChart>
@@ -223,10 +229,7 @@ export default function Home() {
                           label
                         >
                           {misusePie.map((entry, index) => (
-                            <Cell
-                              key={index}
-                              fill={COLORS[index % COLORS.length]}
-                            />
+                            <Cell key={index} fill={COLORS[index % COLORS.length]} />
                           ))}
                         </Pie>
                         <Tooltip />
@@ -249,10 +252,8 @@ export default function Home() {
                   <thead>
                     <tr className="bg-green-700 text-white">
                       <th className="border-b p-2">Year</th>
-                      <th className="border-b p-2">Antibiotic Use (Index)</th>
-                      <th className="border-b p-2">
-                        Resistance Rate (% of bacteria)
-                      </th>
+                      <th className="border-b p-2">Antibiotic Use (index)</th>
+                      <th className="border-b p-2">Resistance Rate (%)</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -269,17 +270,102 @@ export default function Home() {
             </section>
           )}
 
+          {tab === "solutions" && (
+            <section>
+              <h2 className="text-2xl font-semibold mb-3 text-green-700">
+                Solutions to Reduce Misuse
+              </h2>
+
+              <p className="mb-4 text-gray-700">
+                Reducing misuse requires actions by health systems, doctors,
+                pharmacists, farmers, governments, and the public. Here are key
+                and proven approaches.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-4 border rounded">
+                  <h3 className="font-medium mb-2 text-green-700">
+                    1. Antibiotic Stewardship
+                  </h3>
+                  <p className="text-sm text-gray-800 mb-2">
+                    Stewardship programs guide doctors to prescribe the right
+                    antibiotic, dose, and duration. They monitor and improve
+                    prescribing in hospitals and clinics.
+                  </p>
+                </div>
+
+                <div className="p-4 border rounded">
+                  <h3 className="font-medium mb-2 text-green-700">
+                    2. Better Diagnostics
+                  </h3>
+                  <p className="text-sm text-gray-800 mb-2">
+                    Quick tests help doctors know if an infection is bacterial
+                    or viral. This prevents unnecessary antibiotic use.
+                  </p>
+                </div>
+
+                <div className="p-4 border rounded">
+                  <h3 className="font-medium mb-2 text-green-700">
+                    3. Public Education
+                  </h3>
+                  <p className="text-sm text-gray-800 mb-2">
+                    Teach people when antibiotics are needed, why they must finish
+                    the course, and why not to use leftovers or share drugs.
+                  </p>
+                </div>
+
+                <div className="p-4 border rounded">
+                  <h3 className="font-medium mb-2 text-green-700">
+                    4. Regulation and Access Control
+                  </h3>
+                  <p className="text-sm text-gray-800 mb-2">
+                    Enforce prescription-only rules, control over-the-counter
+                    sales, and regulate use in farming and aquaculture.
+                  </p>
+                </div>
+
+                <div className="p-4 border rounded">
+                  <h3 className="font-medium mb-2 text-green-700">
+                    5. Surveillance and Data
+                  </h3>
+                  <p className="text-sm text-gray-800 mb-2">
+                    Track antibiotic use and resistance patterns. Good data helps
+                    target interventions and measure progress.
+                  </p>
+                </div>
+
+                <div className="p-4 border rounded">
+                  <h3 className="font-medium mb-2 text-green-700">
+                    6. Alternatives in Agriculture
+                  </h3>
+                  <p className="text-sm text-gray-800 mb-2">
+                    Use better hygiene, vaccines, and farming practices to reduce
+                    the need for antibiotics in animals.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6 p-4 border rounded bg-gray-50">
+                <h3 className="font-medium mb-2 text-green-700">How to talk about solutions in your presentation</h3>
+                <ul className="text-sm text-gray-700 list-disc list-inside">
+                  <li>Explain one or two stewardship examples from hospitals.</li>
+                  <li>Show how diagnostics reduce unnecessary prescriptions.</li>
+                  <li>Mention policy steps like prescription control and farm rules.</li>
+                </ul>
+              </div>
+            </section>
+          )}
+
           {tab === "about" && (
             <section>
               <h2 className="text-2xl font-semibold mb-3 text-green-700">
                 About & Sources
               </h2>
               <p className="text-gray-700 text-sm mb-3">
-                This project was created by students of the{" "}
-                <strong>Engineering Technology College</strong> at{" "}
-                <strong>Al-Balqa Applied University</strong>. It explains the
-                history of antibiotics, their life-saving impact, and the danger
-                of misuse.
+                This project was created by students of the Engineering
+                Technology College at Al-Balqa Applied University. It explains
+                the history of antibiotics, their benefits, and the problem of
+                misuse. It also lists common solutions.
               </p>
               <ul className="list-disc list-inside text-sm text-gray-700">
                 <li>
@@ -287,6 +373,7 @@ export default function Home() {
                   <a
                     href="https://www.who.int/news-room/fact-sheets/detail/antimicrobial-resistance"
                     target="_blank"
+                    rel="noopener noreferrer"
                     className="text-green-700 underline"
                   >
                     who.int
@@ -297,6 +384,7 @@ export default function Home() {
                   <a
                     href="https://www.cdc.gov/antibiotic-use/data-research/facts-stats/index.html"
                     target="_blank"
+                    rel="noopener noreferrer"
                     className="text-green-700 underline"
                   >
                     cdc.gov
@@ -305,11 +393,12 @@ export default function Home() {
                 <li>
                   Global antibiotic consumption trends —{" "}
                   <a
-                    href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12121568/"
+                    href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8654683/"
                     target="_blank"
+                    rel="noopener noreferrer"
                     className="text-green-700 underline"
                   >
-                    PMC Research Paper
+                    PMC research
                   </a>
                 </li>
               </ul>
@@ -318,7 +407,7 @@ export default function Home() {
         </main>
 
         <footer className="mt-6 text-sm text-center text-gray-500">
-          © {new Date().getFullYear()} Al-Balqa Applied University | Engineering
+          © {new Date().getFullYear()} Al-Balqa Applied University — Engineering
           Technology College
         </footer>
       </div>
